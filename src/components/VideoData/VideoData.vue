@@ -5,7 +5,7 @@ import FileSaver from 'file-saver'
 import * as XLSX from 'xlsx';
 
 const tableData = reactive([])
-const selectedOption = ref(null)
+const selectedOption = ref('')
 const username_list = ref([])
 const loading = ref(false)
 const background = ref(false)
@@ -40,7 +40,7 @@ const get_table_data = () => {
     data['insert_time__lte'] = end_time
   }
   if (selectedOption.value !== '') {
-    data['sender_name'] = selectedOption.value
+    data['sender'] = selectedOption.value
   }
   let url = '/fans-server/weixin_movie/get_db_info'
   request({
@@ -50,10 +50,10 @@ const get_table_data = () => {
   }).then(res => {
     tableData.splice(0, tableData.length)
     tableData.push(...res)
-    console.log(tableData.keys())
-
+    loading.value = false
+  }).catch(err => {
+    console.log(err)
   })
-  loading.value = false
 }
 get_table_data()
 const get_data = () => {
@@ -98,14 +98,14 @@ const downloadExcel = () => {
     <el-row>
       <el-col :span="8">
         发送用户:
-          <el-select v-model="selectedOption" class="m-2" placeholder="Select" size="default" @change="get_data">
-            <el-option
-                v-for="(item,index) in username_list"
-                :key="index"
-                :label="item.value"
-                :value="item.value"
-            />
-          </el-select>
+        <el-select v-model="selectedOption" class="m-2" placeholder="Select" size="default" @change="get_data">
+          <el-option
+              v-for="(item,index) in username_list"
+              :key="index"
+              :label="item.value"
+              :value="item.value"
+          />
+        </el-select>
       </el-col>
       <el-col :span="8">
         <div class="demo-date-picker">

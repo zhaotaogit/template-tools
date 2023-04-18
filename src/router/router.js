@@ -1,7 +1,6 @@
 import {createRouter, createWebHistory} from "vue-router";
 import VideoData from "@/components/VideoData/VideoData.vue";
 import Manage from "@/components/Manage/Manage.vue";
-import Test from "@/components/Test/Test.vue";
 
 const routes = [
     {
@@ -15,10 +14,6 @@ const routes = [
                 name: "VideoData",
                 component: VideoData
             }]
-    },{
-        path: "/Test",
-        name: "Test",
-        component: Test
     }
 ];
 
