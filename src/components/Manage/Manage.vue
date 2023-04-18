@@ -6,7 +6,7 @@
       </el-aside>
 
       <el-main>
-<!--        <router-view></router-view>-->
+        <router-view></router-view>
       </el-main>
     </el-container>
   </div>
@@ -20,7 +20,7 @@ import Aside from "@/components/Aside/Aside.vue";
 <style scoped lang="scss">
 .manage {
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   padding: 0;
   margin: 0;
 }

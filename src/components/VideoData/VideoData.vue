@@ -96,25 +96,21 @@ const downloadExcel = () => {
 <template>
   <div class="main">
     <el-row>
-      <el-col :span="4">
-        <p>发送用户:</p>
-      </el-col>
-      <el-col :span="6">
-        <el-select v-model="selectedOption" class="m-2" placeholder="Select" size="default" @change="get_data">
-          <el-option
-              v-for="(item,index) in username_list"
-              :key="index"
-              :label="item.value"
-              :value="item.value"
-          />
-        </el-select>
-      </el-col>
-      <el-col :span="4">
-        发送时间:
+      <el-col :span="8">
+        发送用户:
+          <el-select v-model="selectedOption" class="m-2" placeholder="Select" size="default" @change="get_data">
+            <el-option
+                v-for="(item,index) in username_list"
+                :key="index"
+                :label="item.value"
+                :value="item.value"
+            />
+          </el-select>
       </el-col>
       <el-col :span="8">
         <div class="demo-date-picker">
           <div class="block">
+            发送时间:
             <el-date-picker
                 v-model="select_time"
                 type="daterange"
@@ -162,8 +158,8 @@ const downloadExcel = () => {
 .main {
   margin: 0;
   padding: 0;
-  width: 60vw;
-  height: 100%;
+  width: 85vw;
+  height: 100vh;
 }
 
 .table {
