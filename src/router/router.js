@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router";
-import VideoData from "@/components/VideoData/VideoData.vue";
-import Manage from "@/components/Manage/Manage.vue";
+import VideoData from "@/views/VideoData.vue";
+import Manage from "@/views/Manage.vue";
+import Home from "@/views/Home.vue";
 
 const routes = [
     {
@@ -13,7 +14,12 @@ const routes = [
                 path: "/VideoData",
                 name: "VideoData",
                 component: VideoData
-            }]
+            },{
+               path: "/Home",
+                name: "Home",
+                component: Home
+            }
+            ]
     }
 ];
 
