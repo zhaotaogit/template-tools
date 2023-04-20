@@ -1,5 +1,5 @@
 {
-  "name": "tab-test",
+  "name": "template-tools",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -14,9 +14,13 @@
     "element-ui": "^2.15.13",
     "exceljs": "^4.3.0",
     "file-saver": "^2.0.5",
+    "jsonlint": "^1.6.3",
+    "jsonlint-mod": "^1.7.6",
+    "parse-json": "^7.0.0",
     "sass": "^1.62.0",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
+    "vue3-json-viewer": "^2.2.2",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
