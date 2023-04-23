@@ -9,6 +9,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="exchangeLayer">交换</el-button>
+                <el-button type="primary" @click="temporaryFill">临时填充</el-button>
             </el-form-item>
         </el-form>
     </el-row>
@@ -42,7 +43,7 @@ import {JsonViewer} from "vue3-json-viewer"
 import "vue3-json-viewer/dist/index.css";
 import {ref, computed, reactive} from "vue";
 import jsonlint from 'jsonlint-mod';
-import exchangeLayerData from "@/common/TemplateLayerTools";
+import {exchangeLayerData, temporaryFilling} from "@/common/TemplateLayerTools";
 
 const layer1 = ref();
 const layer2 = ref();
@@ -62,6 +63,10 @@ const keyClick = (keyName) => {
 }
 const exchangeLayer = () => {
     obj.value = JSON.stringify(exchangeLayerData(jsonlint.parse(obj.value), layer1.value, layer2.value))
+}
+
+const temporaryFill = () => {
+    obj.value = JSON.stringify(temporaryFilling(jsonlint.parse(obj.value)))
 }
 
 

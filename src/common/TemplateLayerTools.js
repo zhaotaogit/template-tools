@@ -75,7 +75,8 @@ const exchangeLayerData1 = (obj, layer) => {
         allLevelDataArray[layer].cookieDetector = temp.cookieDetector;
     } else if (obj['templateType'] === 'MODULE') {
         // allLevelDataArray[0].domains[0] = [allLevelDataArray[layer].urlField];
-        allLevelDataArray[0].httpMethod = allLevelDataArray[layer].httpMethod;
+        // 大写转小写
+        allLevelDataArray[0].httpMethod = allLevelDataArray[layer].httpMethod.toLowerCase();
         allLevelDataArray[0].headers = allLevelDataArray[layer].headers;
         allLevelDataArray[0].followRedirects = allLevelDataArray[layer].followRedirects;
         allLevelDataArray[0].parseError = allLevelDataArray[layer].parseError;
@@ -89,7 +90,7 @@ const exchangeLayerData1 = (obj, layer) => {
         allLevelDataArray[layer].followRedirects = temp.followRedirects;
         allLevelDataArray[layer].parseError = temp.parseError;
         // allLevelDataArray[layer].urlField = [allLevelDataArray[0].domains[0]];
-        allLevelDataArray[layer].httpMethod = temp.httpMethod;
+        allLevelDataArray[layer].httpMethod = temp.httpMethod.toUpperCase();
         allLevelDataArray[layer].proxyType = temp.proxyType;
         allLevelDataArray[layer].headers = temp.headers;
         allLevelDataArray[layer].fieldRules = temp.fieldRules;
@@ -108,7 +109,7 @@ const exchangeLayerData1 = (obj, layer) => {
 }
 
 
-const exchangeLayerData = (obj, layer1, layer2) => {
+export const exchangeLayerData = (obj, layer1, layer2) => {
     console.log(obj, layer1, layer2)
     if (layer1 == 1) {
         return exchangeLayerData1(obj, layer2);
@@ -116,4 +117,47 @@ const exchangeLayerData = (obj, layer1, layer2) => {
     return exchangeLayerData2(obj, layer1, layer2);
 }
 
-export default exchangeLayerData;
+export const temporaryFilling = (obj) => {
+    // 遍历obj对象下所有fieldRules下的所有字段，如果command为空就
+    const allLevelDataArray = getAllLevelData(obj);
+    allLevelDataArray.forEach((item) => {
+            Object.keys(item['fieldRules']).forEach((field) => {
+                    console.log(field)
+                    let f = item['fieldRules'][field];
+                    f.forEach((key) => {
+                        if (key === 'command') {
+                            if (field[key] == 'content') {
+                                field[key].command = '//div[@class="content"]';
+                            } else if (key == 'title') {
+                                field[key].command = '//div[@class="title"]';
+                            } else if (key == 'time') {
+                                field[key].command = '//div[@class="time"]';
+                            } else if (key == 'reporter') {
+                                field[key].command = '//div[@class="reporter"]';
+                            } else if (key == 'source') {
+                                field[key].command = 'test';
+                            } else if (key == 'pic_urls') {
+                                field[key].command = '//div[@class="pic_urls"]';
+                            } else if (key == 'rootSource') {
+                                field[key].command = 'test';
+                            } else if (key == 'editor') {
+                                field[key].command = '//div[@class="pic_urls"]'
+                            } else {
+                                field[key].command = 'test';
+                                field[key].parserName = 'APPENDER';
+                                field[key].parsingType = 'overwrite';
+
+                            }
+                        }
+                    })
+                }
+            )
+        }
+    );
+    let i = 0;
+    while (i < allLevelDataArray.length - 1) {
+        allLevelDataArray[i].next = allLevelDataArray[i + 1];
+        i++;
+    }
+    return allLevelDataArray[0];
+}
