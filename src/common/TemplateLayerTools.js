@@ -122,36 +122,34 @@ export const temporaryFilling = (obj) => {
     const allLevelDataArray = getAllLevelData(obj);
     allLevelDataArray.forEach((item) => {
             Object.keys(item['fieldRules']).forEach((field) => {
-                    console.log(field)
-                    let f = item['fieldRules'][field];
-                    f.forEach((key) => {
-                        if (key === 'command') {
-                            if (field[key] == 'content') {
-                                field[key].command = '//div[@class="content"]';
-                            } else if (key == 'title') {
-                                field[key].command = '//div[@class="title"]';
-                            } else if (key == 'time') {
-                                field[key].command = '//div[@class="time"]';
-                            } else if (key == 'reporter') {
-                                field[key].command = '//div[@class="reporter"]';
-                            } else if (key == 'source') {
-                                field[key].command = 'test';
-                            } else if (key == 'pic_urls') {
-                                field[key].command = '//div[@class="pic_urls"]';
-                            } else if (key == 'rootSource') {
-                                field[key].command = 'test';
-                            } else if (key == 'editor') {
-                                field[key].command = '//div[@class="pic_urls"]'
-                            } else {
-                                field[key].command = 'test';
-                                field[key].parserName = 'APPENDER';
-                                field[key].parsingType = 'overwrite';
-
-                            }
-                        }
-                    })
+                let key = item['fieldRules'][field][0].command;
+                // console.log(`key:${key},field:${field},${typeof field}`);
+                if (!key) {
+                    // console.log(field=='title')
+                    if (field == 'content') {
+                        item['fieldRules'][field][0].command = '//div[@class="content"]';
+                    } else if (field == 'title') {
+                        item['fieldRules'][field][0].command = '//div[@class="title"]';
+                        // console.log(item)
+                    } else if (field == 'time') {
+                        item['fieldRules'][field][0].command = '//div[@class="time"]';
+                    } else if (field == 'reporter') {
+                        item['fieldRules'][field][0].command = '//div[@class="reporter"]';
+                    } else if (field == 'source') {
+                        item['fieldRules'][field][0].command = 'test';
+                    } else if (field == 'pic_urls') {
+                        item['fieldRules'][field][0].command = '//div[@class="pic_urls"]';
+                    } else if (field == 'rootSource') {
+                        item['fieldRules'][field][0].command = 'test';
+                    } else if (field == 'editor') {
+                        item['fieldRules'][field][0].command = '//div[@class="pic_urls"]'
+                    } else {
+                        item['fieldRules'][field][0].command = 'test';
+                        item['fieldRules'][field][0].parserName = 'APPENDER';
+                        item['fieldRules'][field][0].parsingType = 'overwrite';
+                    }
                 }
-            )
+            })
         }
     );
     let i = 0;
@@ -159,5 +157,6 @@ export const temporaryFilling = (obj) => {
         allLevelDataArray[i].next = allLevelDataArray[i + 1];
         i++;
     }
+    console.log(allLevelDataArray[0])
     return allLevelDataArray[0];
 }

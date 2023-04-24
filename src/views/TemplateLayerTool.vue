@@ -44,6 +44,7 @@ import "vue3-json-viewer/dist/index.css";
 import {ref, computed, reactive} from "vue";
 import jsonlint from 'jsonlint-mod';
 import {exchangeLayerData, temporaryFilling} from "@/common/TemplateLayerTools";
+import {ElNotification} from "element-plus";
 
 const layer1 = ref();
 const layer2 = ref();
@@ -62,11 +63,34 @@ const keyClick = (keyName) => {
     console.log(keyName, "被点击了")
 }
 const exchangeLayer = () => {
-    obj.value = JSON.stringify(exchangeLayerData(jsonlint.parse(obj.value), layer1.value, layer2.value))
+    try {
+        obj.value = JSON.stringify(exchangeLayerData(jsonlint.parse(obj.value), layer1.value, layer2.value))
+        ElNotification.success({
+            title: 'Success',
+            message: "交换成功，点击右侧copy按钮可以复制到剪贴板。",
+        })
+    } catch (e) {
+        ElNotification.error({
+            title: 'Error',
+            message: e,
+        })
+    }
 }
 
 const temporaryFill = () => {
-    obj.value = JSON.stringify(temporaryFilling(jsonlint.parse(obj.value)))
+    try {
+        obj.value = JSON.stringify(temporaryFilling(jsonlint.parse(obj.value)))
+        ElNotification.success({
+            title: 'Success',
+            message: "临时填充成功，点击右侧copy按钮可以复制到剪贴板。",
+        })
+
+    } catch (e) {
+        ElNotification.error({
+            title: 'Error',
+            message: e,
+        })
+    }
 }
 
 
