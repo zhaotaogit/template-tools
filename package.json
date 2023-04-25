@@ -17,6 +17,7 @@
     "jsonlint": "^1.6.3",
     "jsonlint-mod": "^1.7.6",
     "parse-json": "^7.0.0",
+    "pinia": "^2.0.35",
     "sass": "^1.62.0",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",

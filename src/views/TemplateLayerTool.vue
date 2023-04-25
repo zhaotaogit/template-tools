@@ -10,6 +10,8 @@
             <el-form-item>
                 <el-button type="primary" @click="exchangeLayer">交换</el-button>
                 <el-button type="primary" @click="temporaryFill">临时填充</el-button>
+                <el-button type="primary" @click="showDialog">替换某层规则</el-button>
+                <el-button type="primary" @click="showDrawer">配置信息</el-button>
             </el-form-item>
         </el-form>
     </el-row>
@@ -36,19 +38,30 @@
             </el-card>
         </el-col>
     </el-row>
+    <TemplateLayerToolDrawer v-model:isShowDrawer="isShowDrawer" @closeDrawer="closeDrawer"/>
+    <TemplateLayerToolDialog v-model:isShowDialog="isShowDialog" @closeDialog="closeDialog" />
+
+
 </template>
 
 <script setup>
 import {JsonViewer} from "vue3-json-viewer"
 import "vue3-json-viewer/dist/index.css";
-import {ref, computed, reactive} from "vue";
+import {ref, computed} from "vue";
 import jsonlint from 'jsonlint-mod';
 import {exchangeLayerData, temporaryFilling} from "@/common/TemplateLayerTools";
 import {ElNotification} from "element-plus";
+import TemplateLayerToolDrawer from "@/components/TemplateLayerToolDrawer.vue";
+import TemplateLayerToolDialog from "@/components/TemplateLayerToolDialog.vue";
+
 
 const layer1 = ref();
 const layer2 = ref();
+const isShowDialog = ref(false);
+const isShowDrawer = ref(false);
 
+
+// 格式化json
 let obj = ref('');
 const json_data = computed(() => {
     // 如果能够解析为json对象，就返回json对象，否则返回错误信息
@@ -59,9 +72,11 @@ const json_data = computed(() => {
         return {error: e.message}
     }
 })
+
 const keyClick = (keyName) => {
     console.log(keyName, "被点击了")
 }
+// 交换层级
 const exchangeLayer = () => {
     try {
         obj.value = JSON.stringify(exchangeLayerData(jsonlint.parse(obj.value), layer1.value, layer2.value))
@@ -76,7 +91,7 @@ const exchangeLayer = () => {
         })
     }
 }
-
+// 临时填充
 const temporaryFill = () => {
     try {
         obj.value = JSON.stringify(temporaryFilling(jsonlint.parse(obj.value)))
@@ -93,7 +108,23 @@ const temporaryFill = () => {
     }
 }
 
+// 抽屉
+const showDrawer = () => {
+    isShowDrawer.value = true
+}
 
+const closeDrawer = () => {
+    isShowDrawer.value = false
+}
+
+
+const showDialog = () => {
+    isShowDialog.value = true
+}
+
+const closeDialog = () => {
+    isShowDialog.value = false
+}
 </script>
 
 <style scoped lang="scss">
