@@ -12,7 +12,8 @@
           <span>首页</span>
         </template>
 <!--        <el-menu-item-group>-->
-          <el-menu-item class="menu-item" index="/TemplateLayerTool">模板工具</el-menu-item>
+          <el-menu-item class="menu-item" index="/TemplateLayerTool">模板工具1</el-menu-item>
+          <el-menu-item class="menu-item" index="/TemplateLayerTool2">模板工具2</el-menu-item>
           <el-menu-item class="menu-item" index="/Home">Welcome</el-menu-item>
 <!--        </el-menu-item-group>-->
       </el-sub-menu>

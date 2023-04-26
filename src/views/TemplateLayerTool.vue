@@ -8,9 +8,9 @@
                 <el-input v-model="layer2" placeholder="输入想交换的层"/>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="exchangeLayer">交换</el-button>
+                <el-button type="primary" @click="exchangeLayer">同模板交换</el-button>
+                <el-button type="primary" @click="showDialog">不同模板交换</el-button>
                 <el-button type="primary" @click="temporaryFill">临时填充</el-button>
-                <el-button type="primary" @click="showDialog">替换某层规则</el-button>
                 <el-button type="primary" @click="showDrawer">配置信息</el-button>
             </el-form-item>
         </el-form>
@@ -39,7 +39,7 @@
         </el-col>
     </el-row>
     <TemplateLayerToolDrawer v-model:isShowDrawer="isShowDrawer" @closeDrawer="closeDrawer"/>
-    <TemplateLayerToolDialog v-model:isShowDialog="isShowDialog" @closeDialog="closeDialog" />
+    <TemplateLayerToolDialog :json_data="json_data" v-model:isShowDialog="isShowDialog" @closeDialog="closeDialog" />
 
 
 </template>

@@ -162,12 +162,100 @@ export const temporaryFilling = (obj) => {
 }
 
 
+// 复制第一个模板的某一层到另一个模板的某一层（不包括第一层）
+const templateChangeCopy1 = (obj1, obj2, template1Layer, template2Layer) => {
+    template1Layer = template1Layer - 1;
+    template2Layer = template2Layer - 1;
+    const allLevelDataArray1 = getAllLevelData(obj1);
+    const allLevelDataArray2 = getAllLevelData(obj2);
+    const keyVal = allLevelDataArray2[template2Layer].keyVal;
+    allLevelDataArray2[template2Layer] = allLevelDataArray1[template1Layer]
+    allLevelDataArray2[template2Layer].keyVal = keyVal;
+    let i = 0;
+    while (i < allLevelDataArray2.length - 1) {
+        allLevelDataArray2[i].next = allLevelDataArray2[i + 1];
+        i++;
+    }
+    return allLevelDataArray2[0];
+}
 
-// const getCertainLayer = (obj, layer) => {
-//     layer = layer - 1;
-//     let a = {"templateType":"MODULE","name":"闽财网-问答","domains":["www.mincaiwang.com.cn"],"urlPattern":"www.mincaiwang.com.cn/ask/\\d+.htm.*","identifiers":["<section class=\"alltotalsNums\">"],"foreign":0,"origin":"PC","sslProvider":"openssl","seeds":{"bases":["http://www.mincaiwang.com.cn/ask/26792.html","http://www.mincaiwang.com.cn/ask/27315.html"]},"enableCache":true,"httpMethod":"get","headers":null,"params":null,"peekReqHeaders":null,"peekResHeaders":null,"followRedirects":true,"parseError":false,"tableRules":[],"fieldRules":{"question_id":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$self.url"},{"parserName":"REGEX","parsingType":"matchFirst","command":"(?<=ask/)\\d+"}],"question_url":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$self.url"}],"question_title":[{"parserName":"XPATH","parsingType":"textFirst","command":"//section[@class='w1200']/span[2]"}],"question_content":[{"parserName":"XPATH","parsingType":"textFirst","command":"//section[@class='w1200 questionBody']/section[@class='ques-item']"}],"question_comment_num":[{"parserName":"XPATH","parsingType":"textFirst","command":"//section[@class='wdContent']/section[@class='alltotalsNums']/p"},{"parserName":"REGEX","parsingType":"matchFirst","command":"\\d+(?=人已答)","attrName":""}],"question_read_num":[{"parserName":"XPATH","parsingType":"textFirst","command":"//section[@class='wdContent']/section[@class='alltotalsNums']/p","attrName":""},{"parserName":"REGEX","parsingType":"matchFirst","command":"\\d+(?=查看)"}],"question_username":[{"parserName":"XPATH","parsingType":"textFirst","command":"//section[@class='w1200 questionBody']/section[@class='top-ques']/span[2]"},{"parserName":"APPENDER","parsingType":"default","command":"匿名"}],"realSource":[{"parserName":"APPENDER","parsingType":"overwrite","command":"闽财网"}],"question_time":[{"parserName":"XPATH","parsingType":"textFirst","command":"//section[@class='w1200 questionBody']/section[@class='top-ques']/p/span[3]","attrName":""},{"parserName":"TIME","parsingType":"auto","command":"yyyy MM dd HH mm ss S|yyyy MM dd HH mm ss SSS|yyyy MM dd HH mm ss|yyyy MM dd|yyyy MM dd HH mm|HH mm","attrName":""}]},"hasMsgType":false,"returnResult":true,"proxyType":"NAT","detectChineseCharset":true,"useCookieJar":false,"cleanAnchor":true,"cookieDetector":null,"next":{"isshow":true,"followRedirects":true,"httpMethod":"GET","proxyType":"NAT","tableRules":[{"parserName":"XPATH","parsingType":"htmlAll","command":"//section[@class='wdcontent-item']"}],"fieldRules":{"question_id":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$pre.question_id"}],"question_url":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$pre.question_url"}],"question_title":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$pre.question_title"}],"question_time":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$pre.question_time"}],"question_username":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$pre.question_username"}],"question_content":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$pre.question_content"}],"question_comment_num":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$pre.question_comment_num"}],"question_read_num":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$pre.question_read_num"}],"answer_username":[{"parserName":"XPATH","parsingType":"textFirst","command":"//p[@class='username']/span[1]"},{"parserName":"APPENDER","parsingType":"default","command":"匿名"}],"answer_content":[{"parserName":"XPATH","parsingType":"textFirst","command":"//section[@class='neirong']"}],"answer_time_text":[{"parserName":"XPATH","parsingType":"textFirst","command":"//section[@class='userInfos']/section[@class='userInfos-left']/p[3]"},{"parserName":"REGEX","parsingType":"replaceAll","command":".{0,30}\\||\\s"}],"answer_url":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$cur.question_url","attrName":""},{"parserName":"APPENDER","parsingType":"suffix","command":"?answer_name="},{"parserName":"APPENDER","parsingType":"suffix","command":"$cur.answer_username"},{"parserName":"APPENDER","parsingType":"suffix","command":"&answer_time="},{"parserName":"APPENDER","parsingType":"suffix","command":"$cur.answer_time_text"}],"realSource":[{"parserName":"APPENDER","parsingType":"overwrite","command":"闽财网"}],"origin_url":[{"parserName":"APPENDER","parsingType":"overwrite","command":"$root.$subtemplate.url"}],"answer_time":[{"parserName":"XPATH","parsingType":"textFirst","command":"//section[@class='userInfos']/section[@class='userInfos-left']/p[3]","attrName":""},{"parserName":"REGEX","parsingType":"replaceAll","command":".{0,30}\\||\\s"},{"parserName":"TIME","parsingType":"auto","command":"yyyy MM dd HH mm ss S|yyyy MM dd HH mm ss SSS|yyyy MM dd HH mm ss|yyyy MM dd|yyyy MM dd HH mm|HH mm","attrName":""}]},"returnResult":true,"hasMsgType":false,"msgType":{"c1":null,"c2":null,"c3":null,"c4":null},"seeds":{"bases":null,"firstPath":null,"pages":null,"outerParams":null,"lastPath":null},"params":null,"headers":null},"msgType":{"c1":"TEXT","c2":"QA","c3":"PGC","c4":"问答"},"discardFields":["answer_time_text"],"subType":0,"execType":"0"}
-//     const allLevelDataArray = getAllLevelData(obj)
-//     console.log(allLevelDataArray[layer])
-// }
-//
-// getCertainLayer(obj, 1)
+
+const templateChangeCopy2 = (obj1, obj2, template1Layer, template2Layer) => {
+    template1Layer = template1Layer - 1;
+    template2Layer = template2Layer - 1;
+    const allLevelDataArray1 = getAllLevelData(obj1);
+    const allLevelDataArray2 = getAllLevelData(obj2);
+    if (obj['templateType'] === 'COMPLETE') {
+        if (template1Layer == 1 && template2Layer !== 1) {
+            allLevelDataArray2[layer].urlField = allLevelDataArray1[0].seeds.bases[0];
+            allLevelDataArray2[layer].seeds.bases = [allLevelDataArray1[0].urlField];
+            allLevelDataArray2[layer].params = allLevelDataArray1[0].params;
+            allLevelDataArray2[layer].httpMethod = allLevelDataArray1[0].httpMethod;
+            allLevelDataArray2[layer].headers = allLevelDataArray1[0].headers;
+            allLevelDataArray2[layer].proxyType = allLevelDataArray1[0].proxyType;
+            allLevelDataArray2[layer].peekReqHeaders = allLevelDataArray1[0].peekReqHeaders;
+            allLevelDataArray2[layer].peekResHeaders = allLevelDataArray1[0].peekResHeaders;
+            allLevelDataArray2[layer].followRedirects = allLevelDataArray1[0].followRedirects;
+            allLevelDataArray2[layer].parseError = allLevelDataArray1[0].parseError;
+            allLevelDataArray2[layer].tableRules = allLevelDataArray1[0].tableRules;
+            allLevelDataArray2[layer].fieldRules = allLevelDataArray1[0].fieldRules;
+            allLevelDataArray2[layer].returnResult = allLevelDataArray1[0].returnResult;
+            allLevelDataArray2[layer].cookieDetector = allLevelDataArray1[0].cookieDetector;
+        } else if (template1Layer !== 1 && template2Layer == 1) {
+            allLevelDataArray2[0].seeds.bases = [allLevelDataArray1[layer].urlField];
+            allLevelDataArray2[0].params = allLevelDataArray1[layer].params;
+            allLevelDataArray2[0].httpMethod = allLevelDataArray1[layer].httpMethod;
+            allLevelDataArray2[0].headers = allLevelDataArray1[layer].headers;
+            allLevelDataArray2[0].proxyType = allLevelDataArray1[layer].proxyType;
+            allLevelDataArray2[0].peekReqHeaders = allLevelDataArray1[layer].peekReqHeaders;
+            allLevelDataArray2[0].peekResHeaders = allLevelDataArray1[layer].peekResHeaders;
+            allLevelDataArray2[0].followRedirects = allLevelDataArray1[layer].followRedirects;
+            allLevelDataArray2[0].parseError = allLevelDataArray1[layer].parseError;
+            allLevelDataArray2[0].tableRules = allLevelDataArray1[layer].tableRules;
+            allLevelDataArray2[0].fieldRules = allLevelDataArray1[layer].fieldRules;
+            allLevelDataArray2[0].returnResult = allLevelDataArray1[layer].returnResult;
+            // allLevelDataArray[0].cookieDetector = allLevelDataArray[layer].cookieDetector;
+        }
+    } else if (obj['templateType'] === 'MODULE') {
+        // allLevelDataArray[0].domains[0] = [allLevelDataArray[layer].urlField];
+        if (template1Layer == 1 && template2Layer !== 1) {
+            // allLevelDataArray[0].msgType = allLevelDataArray[layer].msgType;
+            allLevelDataArray[layer].followRedirects = temp.followRedirects;
+            allLevelDataArray[layer].parseError = temp.parseError;
+            // allLevelDataArray[layer].urlField = [allLevelDataArray[0].domains[0]];
+            allLevelDataArray[layer].httpMethod = temp.httpMethod.toUpperCase();
+            allLevelDataArray[layer].proxyType = temp.proxyType;
+            allLevelDataArray[layer].headers = temp.headers;
+            allLevelDataArray[layer].fieldRules = temp.fieldRules;
+            allLevelDataArray[layer].returnResult = temp.returnResult;
+            allLevelDataArray[layer].hasMsgType = temp.hasMsgType;
+            allLevelDataArray[layer].params = temp.params;
+            allLevelDataArray[layer].tableRules = temp.tableRules;
+            // allLevelDataArray[layer].msgType = temp.msgType;
+        } else if (template1Layer !== 1 && template2Layer == 1) {
+            allLevelDataArray[0].httpMethod = allLevelDataArray[layer].httpMethod.toLowerCase();
+            allLevelDataArray[0].headers = allLevelDataArray[layer].headers;
+            allLevelDataArray[0].followRedirects = allLevelDataArray[layer].followRedirects;
+            allLevelDataArray[0].parseError = allLevelDataArray[layer].parseError;
+            allLevelDataArray[0].fieldRules = allLevelDataArray[layer].fieldRules;
+            allLevelDataArray[0].tableRules = allLevelDataArray[layer].tableRules;
+            allLevelDataArray[0].proxyType = allLevelDataArray[layer].proxyType;
+            allLevelDataArray[0].returnResult = allLevelDataArray[layer].returnResult;
+            allLevelDataArray[0].hasMsgType = allLevelDataArray[layer].hasMsgType;
+            allLevelDataArray[0].params = allLevelDataArray[layer].params;
+        }
+    }
+    let i = 0;
+    while (i < allLevelDataArray.length - 1) {
+        allLevelDataArray[i].next = allLevelDataArray[i + 1];
+        i++;
+    }
+    return allLevelDataArray[0];
+}
+
+export const templateChangeCopy = (obj1, obj2, template1Layer, template2Layer) => {
+    if (template1Layer !== 1 || template2Layer !== 1) {
+        return templateChangeCopy1(obj1, obj2, template1Layer, template2Layer);
+    }
+    return templateChangeCopy2(obj1, obj2, template1Layer, template2Layer);
+}

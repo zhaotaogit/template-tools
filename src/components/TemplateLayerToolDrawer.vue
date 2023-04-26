@@ -6,6 +6,7 @@
             size="70%"
             @close="closeDrawer"
     >
+        <h1>占位</h1>
         <template #header="{ close, titleId, titleClass }">
             <h4 :id="titleId" :class="titleClass">This is a custom header!</h4>
             <el-button type="danger" @click="close">
@@ -16,6 +17,7 @@
             </el-button>
         </template>
         <el-divider/>
+        <h1>占位</h1>
     </el-drawer>
 </template>
 
