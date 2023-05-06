@@ -78,15 +78,9 @@ const doTemplateChangeCopy = () => {
         if (new_json_data) {
             ElNotification.success({
                 title: 'Success',
-                message: "复制成功。",
+                message: "交换成功且已复制到剪贴板。",
             })
             emit('closeDialog')
-        } else {
-            copy(JSON.stringify(json_data.value))
-            ElNotification.error({
-                title: 'Success',
-                message: "交换成功且已复制到剪贴板!",
-            })
         }
     } catch (e) {
         ElNotification.error({

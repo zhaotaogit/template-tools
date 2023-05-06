@@ -259,3 +259,26 @@ export const templateChangeCopy = (obj1, obj2, template1Layer, template2Layer) =
     }
     return templateChangeCopy2(obj1, obj2, template1Layer, template2Layer);
 }
+
+
+
+
+// json类型header转模板请求头
+export const jsonHeaderToTemplateHeader = (obj, dic_json, layer) => {
+    const allLevelDataArray = getAllLevelData(obj);
+    if (layer == -1) {
+        for (let i = 0; i < allLevelDataArray.length; i++) {
+            allLevelDataArray[i].headers = dic_json
+        }
+    } else {
+        layer = layer - 1;
+        allLevelDataArray[layer].headers = dic_json;
+    }
+
+    let i = 0;
+    while (i < allLevelDataArray.length - 1) {
+        allLevelDataArray[i].next = allLevelDataArray[i + 1];
+        i++;
+    }
+    return allLevelDataArray[0];
+}

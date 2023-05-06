@@ -9,7 +9,8 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="exchangeLayer">同模板交换</el-button>
-                <el-button type="primary" @click="showDialog">不同模板交换</el-button>
+                <el-button type="primary" @click="showDialogReplaeHeader">请求头填充</el-button>
+                <el-button type="primary" @click="showDialogReplaceData">不同模板交换</el-button>
                 <el-button type="primary" @click="temporaryFill">临时填充</el-button>
                 <el-button type="primary" @click="showDrawer">配置信息</el-button>
             </el-form-item>
@@ -39,7 +40,8 @@
         </el-col>
     </el-row>
     <TemplateLayerToolDrawer v-model:isShowDrawer="isShowDrawer" @closeDrawer="closeDrawer"/>
-    <TemplateLayerToolDialog :json_data="json_data" v-model:isShowDialog="isShowDialog" @closeDialog="closeDialog" />
+    <TemplateLayerToolDialogReplaceData :json_data="json_data" v-model:isShowDialog="isShowDialog_Replace_Data" @closeDialog="closeDialogReplaceData" />
+    <TemplateLayerToolDialogReplaceHeader v-model:json_data="json_data" v-model:isShowDialog="isShowDialog_Replace_Header" @closeDialog="closeDialogReplaceHeader" />
 
 
 </template>
@@ -52,12 +54,14 @@ import jsonlint from 'jsonlint-mod';
 import {exchangeLayerData, temporaryFilling} from "@/common/TemplateLayerTools";
 import {ElNotification} from "element-plus";
 import TemplateLayerToolDrawer from "@/components/TemplateLayerToolDrawer.vue";
-import TemplateLayerToolDialog from "@/components/TemplateLayerToolDialog.vue";
+import TemplateLayerToolDialogReplaceData from "@/components/TemplateLayerToolDialogReplaceData.vue";
+import TemplateLayerToolDialogReplaceHeader from "../components/TemplateLayerToolDialogReplaceHeader.vue";
 
 
 const layer1 = ref();
 const layer2 = ref();
-const isShowDialog = ref(false);
+const isShowDialog_Replace_Data = ref(false);
+const isShowDialog_Replace_Header = ref(false);
 const isShowDrawer = ref(false);
 
 
@@ -118,12 +122,22 @@ const closeDrawer = () => {
 }
 
 
-const showDialog = () => {
-    isShowDialog.value = true
+const showDialogReplaceData = () => {
+    isShowDialog_Replace_Data.value = true
 }
 
-const closeDialog = () => {
-    isShowDialog.value = false
+const closeDialogReplaceData = () => {
+    isShowDialog_Replace_Data.value = false
+}
+const showDialogReplaeHeader = () => {
+    isShowDialog_Replace_Header.value = true
+}
+
+const closeDialogReplaceHeader = (new_json_data) => {
+    isShowDialog_Replace_Header.value = false
+    if (new_json_data) {
+        obj.value = new_json_data
+    }
 }
 </script>
 
